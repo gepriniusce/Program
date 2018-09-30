@@ -8,6 +8,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -18,19 +20,22 @@ import pr.tongson.base.BaseActivity;
  * https://developer.android.google.cn/training/system-ui/
  */
 @SuppressLint("InlinedApi")
-public class ScrollingActivity extends BaseActivity implements View.OnClickListener {
+public class ScrollingActivity extends BaseActivity implements View.OnClickListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
     View topView;
     View bottomView;
     Animation mHiddenTopAction;
     Animation mShowTopAction;
     Animation mHiddenBottomAction;
     Animation mShowBottomAction;
+    GestureDetector mGestureDetector;
+
 
     @SuppressLint("InlinedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
+
 
         initAnim();
 
@@ -39,6 +44,11 @@ public class ScrollingActivity extends BaseActivity implements View.OnClickListe
         initContainer();
         hideContainer();
         setListener();
+        initGestureDetector();
+    }
+
+    private void initGestureDetector() {
+        mGestureDetector = new GestureDetector(this, this);
     }
 
     private void initAnim() {
@@ -54,9 +64,19 @@ public class ScrollingActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void setListener() {
-        findViewById(R.id.tv_content).setOnClickListener(this);
+        findViewById(R.id.tv_content).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return mGestureDetector.onTouchEvent(event);
+            }
+        });
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        System.out.println("onTouchEvent");
+        return mGestureDetector.onTouchEvent(event);
+    }
 
     private void initContainer() {
         topView = findViewById(R.id.container);
@@ -85,14 +105,7 @@ View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY：粘性沉浸模式与普通沉浸模式�
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_content:
-                ActionBar actionBar = getSupportActionBar();
-                if (actionBar != null) {
-                    if (actionBar.isShowing()) {
-                        hideContainer();
-                    } else {
-                        showContainer();
-                    }
-                }
+                
                 break;
             default:
                 break;
@@ -134,4 +147,64 @@ View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY：粘性沉浸模式与普通沉浸模式�
     }
 
 
+    @Override
+    public boolean onDown(MotionEvent e) {
+        System.out.println("onDown");
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+        System.out.println("onShowPress");
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        System.out.println("onSingleTapUp");
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        System.out.println("onScroll");
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+        System.out.println("onLongPress");
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        System.out.println("onFling");
+        return false;
+    }
+
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent e) {
+        System.out.println("onSingleTapConfirmed");
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent e) {
+        System.out.println("onDoubleTap");
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent e) {
+        System.out.println("onDoubleTapEvent");
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            if (actionBar.isShowing()) {
+                hideContainer();
+            } else {
+                showContainer();
+            }
+        }
+        return false;
+    }
 }

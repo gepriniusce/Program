@@ -1,4 +1,4 @@
-package pr.tongson.util;
+package pr.tongson.utils;
 
 import android.content.Context;
 import android.text.TextUtils;

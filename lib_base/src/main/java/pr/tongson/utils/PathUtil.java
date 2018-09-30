@@ -1,4 +1,4 @@
-package pr.tongson.util;
+package pr.tongson.utils;
 
 import android.os.Environment;
 import android.util.Log;
