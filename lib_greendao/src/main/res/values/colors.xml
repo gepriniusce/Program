@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+红色 #FF0000
+橙色 #FF7F00
+黄色 #FFFF00
+绿色 #00FF00
+青色 #00FFFF
+蓝色 #0000FF
+紫色 #8B00FF-->
+    <color name="colorPlanA1">#00FF00</color>
+    <color name="colorPlanA2">#FFFF00</color>
+    <color name="colorPlanA3">#FF7F00</color>
+    <color name="colorPlanA4">#FF0000</color>
+
+    <color name="colorPlanB1">#00FF00</color>
+    <color name="colorPlanB2">#FFFF00</color>
+    <color name="colorPlanB3">#FF7F00</color>
+    <color name="colorPlanB4">#FF0000</color>
+
+</resources>

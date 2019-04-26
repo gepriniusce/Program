@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -27,10 +28,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+
 import java.util.Arrays;
 
-import pr.tongson.base.BaseActivity;
+import pr.tongson.base.ui.activity.BaseActivity;
 import pr.tongson.service.MyService;
+import pr.tongson.utils.FilesUtil;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     FloatingActionButton fab;
@@ -58,7 +62,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        TextView tv = findViewById(R.id.tv);
+        TextView tv = findViewById(R.id.tv_content);
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,8 +74,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
             }
         });
+        initView();
+        initText();
+    }
+
+    TextView mTextView;
 
 
+    private void initView() {
+        mTextView = findViewById(R.id.tv_content);
+    }
+
+    private void initText() {
+        String path= Environment.getExternalStorageDirectory().getAbsolutePath();
+        System.out.println(path);
+
+        JSONArray jsonArray = FilesUtil.getAllFiles(path);
+
+        if (jsonArray != null) {
+            mTextView.setText(jsonArray.toString());
+        }
     }
 
     @Override

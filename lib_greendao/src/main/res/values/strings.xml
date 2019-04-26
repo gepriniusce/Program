@@ -1,0 +1,10 @@
+<resources>
+    <string name="plan_type_a_1">既紧急又重要</string>
+    <string name="plan_type_a_2">重要但不紧急</string>
+    <string name="plan_type_a_3">紧急但不重要</string>
+    <string name="plan_type_a_4">既不紧急也不重要</string>
+    <string name="plan_type_b_1">执行计划</string>
+    <string name="plan_type_b_2">随机之事</string>
+    <string name="plan_type_b_3">制定计划</string>
+    <string name="plan_type_b_4">“发呆”</string>
+</resources>

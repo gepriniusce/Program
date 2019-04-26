@@ -13,8 +13,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.TextView;
 
-import pr.tongson.base.BaseActivity;
+import org.json.JSONArray;
+
+import pr.tongson.base.ui.activity.BaseActivity;
+import pr.tongson.utils.FilesUtil;
 
 /**
  * https://developer.android.google.cn/training/system-ui/
@@ -28,7 +32,7 @@ public class ScrollingActivity extends BaseActivity implements View.OnClickListe
     Animation mHiddenBottomAction;
     Animation mShowBottomAction;
     GestureDetector mGestureDetector;
-
+    TextView mTextView;
 
     @SuppressLint("InlinedApi")
     @Override
@@ -36,6 +40,7 @@ public class ScrollingActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
 
+        initView();
 
         initAnim();
 
@@ -45,6 +50,23 @@ public class ScrollingActivity extends BaseActivity implements View.OnClickListe
         hideContainer();
         setListener();
         initGestureDetector();
+
+        initText();
+    }
+
+    private void initView() {
+        mTextView = findViewById(R.id.tv_content);
+    }
+
+    private void initText() {
+      String path=  "/storage/emulated/0/Pictures/";
+        System.out.println(path);
+
+        JSONArray jsonArray = FilesUtil.getAllFiles(path);
+
+        if (jsonArray != null) {
+            mTextView.setText(jsonArray.toString());
+        }
     }
 
     private void initGestureDetector() {
@@ -64,7 +86,7 @@ public class ScrollingActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void setListener() {
-        findViewById(R.id.tv_content).setOnTouchListener(new View.OnTouchListener() {
+        mTextView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return mGestureDetector.onTouchEvent(event);
@@ -104,9 +126,6 @@ View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY：粘性沉浸模式与普通沉浸模式�
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_content:
-                
-                break;
             default:
                 break;
         }
